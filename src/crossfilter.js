@@ -1129,7 +1129,7 @@ function crossfilter() {
 
         // Reset all group values.
         for (i = 0; i < k; ++i) {
-          groups[i].value = reduceInitial();
+          groups[i].value = reduceInitial(g.key);
         }
 
         // We add all records and then remove filtered records so that reducers
@@ -1139,14 +1139,14 @@ function crossfilter() {
           for (i = 0; i < n; ++i) {
             for (j = 0; j < groupIndex[i].length; j++) {
               g = groups[groupIndex[i][j]];
-              g.value = reduceAdd(g.value, data[i], true, j);
+              g.value = reduceAdd(g.value, data[i], true, j, g.key);
             }
           }
           for (i = 0; i < n; ++i) {
             if (!filters.zeroExcept(i, offset, zero)) {
               for (j = 0; j < groupIndex[i].length; j++) {
                 g = groups[groupIndex[i][j]];
-                g.value = reduceRemove(g.value, data[i], false, j);
+                g.value = reduceRemove(g.value, data[i], false, j, g.key);
               }
             }
           }
@@ -1155,12 +1155,12 @@ function crossfilter() {
 
         for (i = 0; i < n; ++i) {
           g = groups[groupIndex[i]];
-          g.value = reduceAdd(g.value, data[i], true);
+          g.value = reduceAdd(g.value, data[i], true, g.key);
         }
         for (i = 0; i < n; ++i) {
           if (!filters.zeroExcept(i, offset, zero)) {
             g = groups[groupIndex[i]];
-            g.value = reduceRemove(g.value, data[i], false);
+            g.value = reduceRemove(g.value, data[i], false, g.key);
           }
         }
       }
@@ -1172,18 +1172,18 @@ function crossfilter() {
             g = groups[0];
 
         // Reset the singleton group values.
-        g.value = reduceInitial();
+        g.value = reduceInitial(g.key);
 
         // We add all records and then remove filtered records so that reducers
         // can build an 'unfiltered' view even if there are already filters in
         // place on other dimensions.
         for (i = 0; i < n; ++i) {
-          g.value = reduceAdd(g.value, data[i], true);
+          g.value = reduceAdd(g.value, data[i], true, g.key);
         }
 
         for (i = 0; i < n; ++i) {
           if (!filters.zeroExcept(i, offset, zero)) {
-            g.value = reduceRemove(g.value, data[i], false);
+            g.value = reduceRemove(g.value, data[i], false, g.key);
           }
         }
       }
