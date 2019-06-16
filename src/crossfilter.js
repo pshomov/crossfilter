@@ -889,8 +889,8 @@ function crossfilter() {
 
             // Always add new values to groups. Only remove when not in filter.
             // This gives groups full information on data life-cycle.
-            g.value = add(g.value, data[j], true);
-            if (!filters.zeroExcept(j, offset, zero)) g.value = remove(g.value, data[j], false);
+            g.value = add(g.value, data[j], true, g.key);
+            if (!filters.zeroExcept(j, offset, zero)) g.value = remove(g.value, data[j], false, g.key);
             if (++i1 >= n1) break;
             x1 = key(newValues[i1]);
           }
