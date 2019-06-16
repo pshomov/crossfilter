@@ -1129,7 +1129,7 @@ function crossfilter() {
 
         // Reset all group values.
         for (i = 0; i < k; ++i) {
-          groups[i].value = reduceInitial(g.key);
+          groups[i].value = reduceInitial(groups[i].key);
         }
 
         // We add all records and then remove filtered records so that reducers
